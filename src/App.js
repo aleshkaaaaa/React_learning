@@ -1,24 +1,41 @@
-import { useState } from "react";
-import { Message } from "./components/Message";
-import { Counter } from "./components/Counter";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
+import { MessageList } from "./components/MessageList/MessageList.jsx";
+import { Form } from "./components/Form/Form.jsx";
+import { AUTHORS } from "./utils/constants";
+
+const initialMessages = [
+  {
+    text:"text1",
+    author: AUTHORS.human
+  }
+]
 
 function App() {
-  const [text, setText] = useState("i am a prop");
+  const [messages, setMessages] = useState(initialMessages);
 
-  const handleClick = () => {
-    alert("click");
-    setText("123" + Math.random());
-  };
+  const handleSendMessage = useCallback((newMessage) => {
+    setMessages(prevMessages => [...prevMessages,newMessage]);
+  },[]);
+
+  useEffect(() => {
+    if (messages.length && messages[messages.length - 1].author !== AUTHORS.bot) {
+      const timeout = setTimeout(
+        () =>
+        handleSendMessage({
+          author: AUTHORS.bot,
+          text: "bip bop, i am robot",
+          id: `mes-${Date.now()}`,
+        }), 1500);
+        return () => clearTimeout(timeout);
+    }
+  }, [messages]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <Message message={text} onMessageClick={handleClick} />
-        <p>
-          My first React App
-        </p>
-        <Counter />
+        <MessageList messages={messages} />
+        <Form onSendMessage={handleSendMessage} />
       </header>
     </div>
   );

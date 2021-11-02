@@ -24,6 +24,31 @@
   color: white;
 }
 
+input {
+  padding: 10px 40px 10px 40px;
+  border-radius: 30px;
+  border: 1px solid black;
+  color: black;
+  background-color: white;
+}
+
+.input {
+  margin: 20px 0px 0px 0px;
+  padding: 10px 40px 10px 40px;
+  border-radius: 30px;
+  border: 1px solid black;
+  color: black;
+  background-color: rgb(82, 96, 107);
+}
+
+.input:hover {
+  background-color: rgb(115, 135, 150);
+}
+
+.input:active {
+  background-color: rgb(82, 96, 107);
+}
+
 .App-link {
   color: #61dafb;
 }
