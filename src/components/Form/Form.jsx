@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { AUTHORS } from '../../utils/constants';
+import Button from '@mui/material/Button';
+import { TextField } from '@mui/material';
 
 export const Form = ({onSendMessage}) => {
   const [value, setValue] = useState('');
@@ -11,7 +13,6 @@ export const Form = ({onSendMessage}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
     onSendMessage({
         text: value,
         author: AUTHORS.human,
@@ -20,10 +21,12 @@ export const Form = ({onSendMessage}) => {
     setValue('');
   }
 
+  inputRef.current?.focus();
+
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" value={value} onChange={handleChange} />
-      <input className="input" type="submit" />
+      <TextField id="outlined-basic" label="Outlined" variant="outlined" value={value} onChange={handleChange} inputRef={inputRef}/>
+      <Button variant="contained" type="submit">Send</Button>
     </form>
-  )
-}
+  );
+};
